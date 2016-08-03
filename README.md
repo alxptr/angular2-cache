@@ -12,9 +12,6 @@ The cache service supports the following types of caching:
 4. SESSION via Window.sessionStorage (in progress)
 5. FILE via chrome.fileSystem (in progress)
 
-```sh
-npm install angular2-cache --save
-
 ## Installation
 
 First you need to install the npm module:
