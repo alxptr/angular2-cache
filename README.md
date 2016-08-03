@@ -12,7 +12,7 @@ npm install angular2-cache --save
 ## Publish
 
 ```sh
-npm install & tsc & npm publish ./
+npm run deploy
 ```
 
 ## License

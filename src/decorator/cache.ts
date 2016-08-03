@@ -73,10 +73,10 @@ function cache(cacheType:CacheTypeEnum) {
     }
 }
 
-export function ZoneCached() {
+export function ZoneCached(...args:any[]) {
     return cache(CacheTypeEnum.ZONE);
 }
 
-export function MemoryCached() {
+export function MemoryCached(...args:any[]) {
     return cache(CacheTypeEnum.MEMORY);
 }
