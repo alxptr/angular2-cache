@@ -1,12 +1,12 @@
 {
   "name": "angular2-cache",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "license": "MIT",
   "scripts": {
     "clean": "npm cache clean",
     "typings-install": "typings install",
     "postinstall": "npm run typings-install",
-    "deploy": "npm install & tsc & npm publish ./"
+    "deploy": "npm install && tsc && npm publish ./"
   },
   "dependencies": {
     "angular2-smart-logger": "latest"
