@@ -31,7 +31,7 @@ export class NgZoneCache extends NgZone implements ICache<string, any> {
 
         this.onStable.subscribe(() => {
             if (NgZoneCache.logger.isDebugEnabled()) {
-                NgZoneCache.logger.debug(`[$NgZoneCache][onStable.subscribe] Destruction the cache context zone. The cache with size ${this.cache.size} will be cleared`);
+                NgZoneCache.logger.debug(`[$NgZoneCache][onStable.subscribe] Destruction the cache context zone. The cache with size ${this.size()} will be cleared`);
             }
             
             /**
