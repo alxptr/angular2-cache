@@ -80,3 +80,15 @@ export function ZoneCached(...args:any[]) {
 export function MemoryCached(...args:any[]) {
     return cache(CacheTypeEnum.MEMORY);
 }
+
+export function SessionCached(...args:any[]) {
+    return cache(CacheTypeEnum.SESSION);
+}
+
+export function StorageCached(...args:any[]) {
+    return cache(CacheTypeEnum.STORAGE);
+}
+
+export function FileCached(...args:any[]) {
+    return cache(CacheTypeEnum.FILE);
+}
