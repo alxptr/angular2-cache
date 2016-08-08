@@ -1,5 +1,6 @@
 import {
     Injectable,
+    Inject,
     NgZone
 } from '@angular/core';
 
@@ -9,14 +10,13 @@ import {ICache} from '../ICache';
 import {MapCache} from '../memory/MapCache';
 
 @Injectable()
-export class NgZoneCache extends NgZone implements ICache<string, any> {
+export class NgZoneCache implements ICache<string, any> {
 
     private static logger:ILogger = LoggerFactory.makeLogger(NgZoneCache);
 
     private cache:ICache<string, any> = new MapCache<string, any>();
 
-    constructor() {
-        super({enableLongStackTrace: false});
+    constructor(@Inject(NgZone) ngZone:NgZone) {
 
         /**
          * The onUnstable & onStable are synchronized emitters, so we can use them.
@@ -49,7 +49,7 @@ export class NgZoneCache extends NgZone implements ICache<string, any> {
         /**
          * Notifies when code enters Angular Zone. This gets fired first on VM Turn.
          */
-        this.onUnstable.subscribe(() => {
+        ngZone.onUnstable.subscribe(() => {
             if (NgZoneCache.logger.isDebugEnabled()) {
                 NgZoneCache.logger.debug(`[$NgZoneCache][onUnstable.subscribe] Initialize the cache context zone`);
             }
@@ -61,7 +61,7 @@ export class NgZoneCache extends NgZone implements ICache<string, any> {
          * implies we are about to relinquish VM turn.
          * This event gets called just once.
          */
-        this.onStable.subscribe(() => {
+        ngZone.onStable.subscribe(() => {
             if (NgZoneCache.logger.isDebugEnabled()) {
                 NgZoneCache.logger.debug(`[$NgZoneCache][onStable.subscribe] Destruction the cache context zone. The cache with size ${this.size()} will be cleared`);
             }

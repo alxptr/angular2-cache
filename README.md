@@ -33,6 +33,20 @@ export function main() {
 }
 ```
 
+**app.ts**
+```typescript
+import {NgZoneCache} from 'angular2-cache';
+
+@Component({
+  selector: 'app',
+  ...
+})
+export class App {
+
+   constructor(@Inject(NgZoneCache) protected ngZoneCache:NgZoneCache,  // If we want to use ZONE cache
+               ...) {...}
+```
+
 **Service.ts**
 ```typescript
 export class Service {
