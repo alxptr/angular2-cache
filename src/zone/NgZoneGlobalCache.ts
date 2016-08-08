@@ -34,14 +34,14 @@ export class NgZoneGlobalCache extends MemoryCache<any, any> {
          *
          * In the console we'll see:
          *
-         *  [$NgZoneCache][onUnstable.subscribe] Initialize the cache context zone
+         *  [$NgZoneGlobalCache][onUnstable.subscribe] Initialize the cache context zone
          *  Zone 1
-         *  [$NgZoneCache][setCachedValue]..
+         *  [$NgZoneGlobalCache][setCachedValue]..
          *  ...
-         *  [$NgZoneCache][onStable.subscribe] Destruction the cache context zone. The cache with size 14 will be cleared
-         *  [$NgZoneCache][onUnstable.subscribe] Initialize the cache context zone
+         *  [$NgZoneGlobalCache][onStable.subscribe] Destruction the cache context zone. The cache with size 14 will be cleared
+         *  [$NgZoneGlobalCache][onUnstable.subscribe] Initialize the cache context zone
          *  Zone 2
-         *  [$NgZoneCache][setCachedValue]..
+         *  [$NgZoneGlobalCache][setCachedValue]..
          *  ...
          */
 
@@ -50,7 +50,7 @@ export class NgZoneGlobalCache extends MemoryCache<any, any> {
          */
         ngZone.onUnstable.subscribe(() => {
             if (this.isLoggingEnabled()) {
-                NgZoneGlobalCache.zoneLogger.debug(`[$NgZoneCache][onUnstable.subscribe] Initialize the cache context zone`);
+                NgZoneGlobalCache.zoneLogger.debug(`[$NgZoneGlobalCache][onUnstable.subscribe] Initialize the cache context zone`);
             }
             this.clear();
         });
@@ -62,7 +62,7 @@ export class NgZoneGlobalCache extends MemoryCache<any, any> {
          */
         ngZone.onStable.subscribe(() => {
             if (this.isLoggingEnabled()) {
-                NgZoneGlobalCache.zoneLogger.debug(`[$NgZoneCache][onStable.subscribe] Destruction the cache context zone. The cache with size ${this.size()} will be cleared`);
+                NgZoneGlobalCache.zoneLogger.debug(`[$NgZoneGlobalCache][onStable.subscribe] Destruction the cache context zone. The cache with size ${this.size()} will be cleared`);
             }
             this.clear();
         });
