@@ -136,7 +136,7 @@ export class Product {
 
 **app.html**
 ```html
-<span [innerHTML]='"Expires: <strong>{expirationDate}</strong>" | translate: { expirationDate: expirationDate | zoneCachedDate: "yyyy-MM-dd") }'>
+<span [innerHTML]='"Expires: <strong>{expirationDate}</strong>" | translate: { expirationDate: ( expirationDate | zoneCachedDate: "yyyy-MM-dd" ) }'>
 </span>
 ```
 
