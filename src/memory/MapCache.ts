@@ -45,4 +45,11 @@ export class MapCache<TKey, TValue> implements ICache<TKey, TValue> {
     public isLoggingEnabled():boolean {
         throw Error("UnsupportedException");
     }
+
+    /**
+     * @override
+     */
+    public setEnable(enabled:boolean) {
+        throw Error("UnsupportedException");
+    }
 }
