@@ -35,7 +35,7 @@ export function main() {
 
 **app.ts**
 ```typescript
-import {NgZoneGlobalCache} from 'angular2-cache';
+import {NgZoneGlobalCache, MemoryGlobalCache} from 'angular2-cache';
 
 @Component({...})
 export class App {
@@ -45,6 +45,7 @@ export class App {
                ...) 
    {
        ngZoneCache.setEnableLogging(false);                                         // By default, the smart logger is enabled
+       memoryCache.setEnable(false);                                                // By default, the cache is enabled
        ...
    }
 ```
