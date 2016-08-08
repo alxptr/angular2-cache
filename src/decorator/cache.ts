@@ -9,6 +9,7 @@ import {generateUUID} from '../Utils';
 import {CacheTypeEnum} from '../CacheTypeEnum';
 import {ICache} from '../ICache';
 import {NgZoneCache} from '../zone/NgZoneCache';
+import {MemoryCache} from '../memory/MemoryCache';
 
 interface ICacheProvider {
     provideCache():ICache<any, any>;
@@ -20,8 +21,24 @@ class ZoneCacheProvider implements ICacheProvider {
      * @override
      */
     public provideCache():ICache<any, any> {
-        return NgZoneCache.$$self;
+        return NgZoneCache.INSTANCE;
     }
+    
+    public static INSTANCE:ICacheProvider = new ZoneCacheProvider();
+}
+
+class MemoryCacheProvider implements ICacheProvider {
+
+    private cache:ICache<any, any> = new MemoryCache<any, any>();
+
+    /**
+     * @override
+     */
+    public provideCache():ICache<any, any> {
+        return this.cache;
+    }
+
+    public static INSTANCE:ICacheProvider = new MemoryCacheProvider();
 }
 
 function cache(cacheType:CacheTypeEnum) {
@@ -33,7 +50,10 @@ function cache(cacheType:CacheTypeEnum) {
 
     switch (cacheType) {
         case CacheTypeEnum.ZONE:
-            cacheProvider = new ZoneCacheProvider();
+            cacheProvider = ZoneCacheProvider.INSTANCE;
+            break;
+        case CacheTypeEnum.MEMORY:
+            cacheProvider = MemoryCacheProvider.INSTANCE;
             break;
     }
 
@@ -43,8 +63,6 @@ function cache(cacheType:CacheTypeEnum) {
         descriptor.value = function (...args:any[]) {
             const cache:ICache<string, any> = cacheProvider.provideCache();
             if (isBlank(cache)) {
-                // TODO logging
-                console.debug('No cache');
                 return originalMethod.apply(this, args);
             }
 
@@ -68,7 +86,6 @@ function cache(cacheType:CacheTypeEnum) {
             cache.setCachedValue(compositeKey, result = originalMethod.apply(this, args));
             return result;
         };
-
         return descriptor;
     }
 }

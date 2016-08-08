@@ -7,7 +7,7 @@ An implementation of cache at Angular2.
 The cache service supports the following types of caching:  
 
 1. **ZONE** based on the NgZone (the analogue of [Java ThreadLocal](https://docs.oracle.com/javase/8/docs/api/java/lang/ThreadLocal.html))  
-2. MEMORY based on the JavaScript heap (in progress)  
+2. **MEMORY** based on the JavaScript heap  
 3. STORAGE based on the Window.sessionStorage (in progress)  
 4. SESSION based on the Window.sessionStorage (in progress)  
 5. FILE based on the chrome.fileSystem (in progress)  
@@ -37,14 +37,14 @@ export function main() {
 ```typescript
 import {NgZoneCache} from 'angular2-cache';
 
-@Component({
-  selector: 'app',
-  ...
-})
+@Component({...})
 export class App {
 
    constructor(@Inject(NgZoneCache) protected ngZoneCache:NgZoneCache,  // If we want to use ZONE cache
-               ...) {...}
+               ...) 
+   {
+       ngZoneCache.setEnableLogging(false);     // By default, the smart logger is enabled
+   }
 ```
 
 **Service.ts**

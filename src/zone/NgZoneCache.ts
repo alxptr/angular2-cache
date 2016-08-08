@@ -7,16 +7,15 @@ import {
 import {LoggerFactory, ILogger} from 'angular2-smart-logger';
 
 import {ICache} from '../ICache';
-import {MapCache} from '../memory/MapCache';
+import {MemoryCache} from '../memory/MemoryCache';
 
 @Injectable()
-export class NgZoneCache implements ICache<string, any> {
+export class NgZoneCache extends MemoryCache<string, any> {
 
-    private static logger:ILogger = LoggerFactory.makeLogger(NgZoneCache);
-
-    private cache:ICache<string, any> = new MapCache<string, any>();
+    private static zoneLogger:ILogger = LoggerFactory.makeLogger(NgZoneCache);
 
     constructor(@Inject(NgZone) ngZone:NgZone) {
+        super();
 
         /**
          * The onUnstable & onStable are synchronized emitters, so we can use them.
@@ -45,15 +44,15 @@ export class NgZoneCache implements ICache<string, any> {
          *  [$NgZoneCache][setCachedValue]..
          *  ...
          */
-        
+
         /**
          * Notifies when code enters Angular Zone. This gets fired first on VM Turn.
          */
         ngZone.onUnstable.subscribe(() => {
-            if (NgZoneCache.logger.isDebugEnabled()) {
-                NgZoneCache.logger.debug(`[$NgZoneCache][onUnstable.subscribe] Initialize the cache context zone`);
+            if (this.isLoggingEnabled()) {
+                NgZoneCache.zoneLogger.debug(`[$NgZoneCache][onUnstable.subscribe] Initialize the cache context zone`);
             }
-            this.cache.clear();
+            this.clear();
         });
 
         /**
@@ -62,50 +61,14 @@ export class NgZoneCache implements ICache<string, any> {
          * This event gets called just once.
          */
         ngZone.onStable.subscribe(() => {
-            if (NgZoneCache.logger.isDebugEnabled()) {
-                NgZoneCache.logger.debug(`[$NgZoneCache][onStable.subscribe] Destruction the cache context zone. The cache with size ${this.size()} will be cleared`);
+            if (this.isLoggingEnabled()) {
+                NgZoneCache.zoneLogger.debug(`[$NgZoneCache][onStable.subscribe] Destruction the cache context zone. The cache with size ${this.size()} will be cleared`);
             }
-            this.cache.clear();
+            this.clear();
         });
 
-        NgZoneCache.$$self = this;
+        NgZoneCache.INSTANCE = this;
     }
 
-    /**
-     * @override
-     */
-    public setCachedValue(key:string, value:any) {
-        this.cache.setCachedValue(key, value);
-
-        if (NgZoneCache.logger.isDebugEnabled()) {
-            NgZoneCache.logger.debug('[$NgZoneCache][setCachedValue] The value', value, 'with the key', key, 'has been put into the cache');
-        }
-    }
-
-    /**
-     * @override
-     */
-    public getCachedValue(key:string):any {
-        const value:any = this.cache.getCachedValue(key);
-        if (NgZoneCache.logger.isDebugEnabled() && typeof value !== "undefined") {
-            NgZoneCache.logger.debug('[$NgZoneCache][getCachedValue] The value', value, 'with the key', key, 'has been retrieved from the cache');
-        }
-        return value;
-    }
-
-    /**
-     * @override
-     */
-    public clear() {
-        return this.cache.clear();
-    }
-
-    /**
-     * @override
-     */
-    public size() {
-        return this.cache.size();
-    }
-
-    public static $$self:ICache<string, any>;
+    public static INSTANCE:ICache<any, any>;
 }

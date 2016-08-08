@@ -22,7 +22,7 @@ export class MapCache<TKey, TValue> implements ICache<TKey, TValue> {
      * @override
      */
     public clear() {
-        return this._cache.clear();
+        this._cache.clear();
     }
 
     /**
@@ -30,5 +30,19 @@ export class MapCache<TKey, TValue> implements ICache<TKey, TValue> {
      */
     public size() {
         return this._cache.size;
+    }
+
+    /**
+     * @override
+     */
+    public setEnableLogging(enabled:boolean) {
+        throw Error("UnsupportedException");
+    }
+
+    /**
+     * @override
+     */
+    public isLoggingEnabled():boolean {
+        throw Error("UnsupportedException");
     }
 }

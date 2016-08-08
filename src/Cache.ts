@@ -6,7 +6,7 @@ export class Cache<TKey, TValue> implements ICache<TKey, TValue> {
 
     private static logger:ILogger = LoggerFactory.makeLogger(Cache);
 
-    private loggingEnable:boolean = true;
+    protected loggingEnable:boolean = true;
 
     constructor(private _cache:ICache<TKey, TValue>) {
     }
@@ -17,8 +17,8 @@ export class Cache<TKey, TValue> implements ICache<TKey, TValue> {
     public setCachedValue(key:TKey, value:TValue) {
         this._cache.setCachedValue(key, value);
 
-        if (this.loggingEnable && Cache.logger.isDebugEnabled()) {
-            Cache.logger.debug('[Cache][setCachedValue] Set value to the cache. Key:', key, ', value: ', value, ', cache: ', this._cache.constructor.name);
+        if (this.isLoggingEnabled()) {
+            Cache.logger.debug('[Cache][setCachedValue] Set value to the cache. Key:', key, ', value: ', value, ', cache: ', this.constructor.name);
         }
     }
 
@@ -28,8 +28,8 @@ export class Cache<TKey, TValue> implements ICache<TKey, TValue> {
     public getCachedValue(key:TKey):TValue {
         const value:TValue = this._cache.getCachedValue(key);
 
-        if (this.loggingEnable && Cache.logger.isDebugEnabled()) {
-            Cache.logger.debug('[Cache][getCachedValue] Get value from the cache. Key:', key, ', value: ', value, ', cache: ', this._cache.constructor.name);
+        if (this.isLoggingEnabled() && typeof value !== "undefined") {
+            Cache.logger.debug('[Cache][getCachedValue] Get value from the cache. Key:', key, ', value: ', value, ', cache: ', this.constructor.name);
         }
         return value;
     }
@@ -38,8 +38,8 @@ export class Cache<TKey, TValue> implements ICache<TKey, TValue> {
      * @override
      */
     public clear() {
-        if (this.loggingEnable && Cache.logger.isDebugEnabled()) {
-            Cache.logger.debug(`[Cache][clear] Clear the cache. The cache has size ${this.size()}, cache: ${this._cache.constructor.name}`);
+        if (this.isLoggingEnabled()) {
+            Cache.logger.debug(`[Cache][clear] Clear the cache. The cache has size ${this.size()}, cache: ${this.constructor.name}`);
         }
         this._cache.clear();
     }
@@ -56,5 +56,12 @@ export class Cache<TKey, TValue> implements ICache<TKey, TValue> {
      */
     public setEnableLogging(enabled:boolean) {
         this.loggingEnable = enabled;
+    }
+
+    /**
+     * @override
+     */
+    public isLoggingEnabled() {
+        return this.loggingEnable && Cache.logger.isDebugEnabled();
     }
 }

@@ -5,8 +5,10 @@ export interface ICache<TKey, TValue> {
     getCachedValue(key:TKey):TValue;
 
     clear();
-    
+
     size():number;
 
     setEnableLogging(enabled:boolean);
+
+    isLoggingEnabled();
 }

@@ -5,20 +5,34 @@ import {
 
 import {DatePipe} from '@angular/common';
 
-import {ZoneCached} from '../decorator/cache';
+import {ZoneCached, MemoryCached} from '../decorator/cache';
+
+const DATE_PIPE:DatePipe = new DatePipe();
 
 @Pipe({
-    name: 'cachedDate'
+    name: 'zoneCachedDate'
 })
-export class CachedDatePipe implements PipeTransform {
-
-    private pipe:DatePipe = new DatePipe();
+export class ZoneCachedDatePipe implements PipeTransform {
 
     /**
      * @override
      */
     @ZoneCached()
     public transform(date:any, pattern?:string):string {
-        return this.pipe.transform(date, pattern);
+        return DATE_PIPE.transform(date, pattern);
+    }
+}
+
+@Pipe({
+    name: 'memoryCachedDate'
+})
+export class MemoryCachedDatePipe implements PipeTransform {
+
+    /**
+     * @override
+     */
+    @MemoryCached()
+    public transform(date:any, pattern?:string):string {
+        return DATE_PIPE.transform(date, pattern);
     }
 }
