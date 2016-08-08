@@ -6,7 +6,7 @@ An implementation of cache at Angular2.
 
 The cache service supports the following types of caching:  
 
-1. **ZONE** based on the NgZone and the MemoryGlobalCache (the analogue of [Java ThreadLocal](https://docs.oracle.com/javase/8/docs/api/java/lang/ThreadLocal.html)).  
+1. **ZONE** based on the [NgZone](https://angular.io/docs/ts/latest/api/core/index/NgZone-class.html) (the analogue of [Java ThreadLocal](https://docs.oracle.com/javase/8/docs/api/java/lang/ThreadLocal.html)) and the MemoryGlobalCache.  
     The NgZoneGlobalCache service and @ZoneCached decorator are accessible for use.  
 2. **MEMORY** based on [the JavaScript Map](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Map) (reset after F5).  
     The MemoryGlobalCache service and @MemoryCached decorator are accessible for use.  
@@ -20,16 +20,6 @@ First you need to install the npm module:
 ```sh
 npm install angular2-cache --save
 ```
-
-## The accessible decorators an
-
-export function ZoneCached(...args:any[]) {
-    return cache(CacheTypeEnum.ZONE);
-}
-
-export function MemoryCached(...args:any[]) {
-    return cache(CacheTypeEnum.MEMORY);
-}
 
 ## Use
 
