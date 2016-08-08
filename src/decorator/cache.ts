@@ -8,54 +8,13 @@ import {generateUUID} from '../Utils';
 
 import {CacheTypeEnum} from '../CacheTypeEnum';
 import {ICache} from '../ICache';
-import {NgZoneCache} from '../zone/NgZoneCache';
-import {MemoryCache} from '../memory/MemoryCache';
-
-interface ICacheProvider {
-    provideCache():ICache<any, any>;
-}
-
-class ZoneCacheProvider implements ICacheProvider {
-
-    /**
-     * @override
-     */
-    public provideCache():ICache<any, any> {
-        return NgZoneCache.INSTANCE;
-    }
-    
-    public static INSTANCE:ICacheProvider = new ZoneCacheProvider();
-}
-
-class MemoryCacheProvider implements ICacheProvider {
-
-    private cache:ICache<any, any> = new MemoryCache<any, any>();
-
-    /**
-     * @override
-     */
-    public provideCache():ICache<any, any> {
-        return this.cache;
-    }
-
-    public static INSTANCE:ICacheProvider = new MemoryCacheProvider();
-}
+import {ICacheProvider, getProviderByType} from './provider';
 
 function cache(cacheType:CacheTypeEnum) {
 
     const uniqueCacheKey:string = generateUUID();
     const arrayConcatFn:Function = Array.prototype.concat;
-
-    let cacheProvider:ICacheProvider;
-
-    switch (cacheType) {
-        case CacheTypeEnum.ZONE:
-            cacheProvider = ZoneCacheProvider.INSTANCE;
-            break;
-        case CacheTypeEnum.MEMORY:
-            cacheProvider = MemoryCacheProvider.INSTANCE;
-            break;
-    }
+    const cacheProvider:ICacheProvider = getProviderByType(cacheType);
 
     return function (target:Object, propertyKey:string, descriptor:TypedPropertyDescriptor<any>) {
         const originalMethod:Type = descriptor.value;

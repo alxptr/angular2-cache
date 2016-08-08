@@ -10,9 +10,9 @@ import {ICache} from '../ICache';
 import {MemoryCache} from '../memory/MemoryCache';
 
 @Injectable()
-export class NgZoneCache extends MemoryCache<string, any> {
+export class NgZoneGlobalCache extends MemoryCache<any, any> {
 
-    private static zoneLogger:ILogger = LoggerFactory.makeLogger(NgZoneCache);
+    private static zoneLogger:ILogger = LoggerFactory.makeLogger(NgZoneGlobalCache);
 
     constructor(@Inject(NgZone) ngZone:NgZone) {
         super();
@@ -50,7 +50,7 @@ export class NgZoneCache extends MemoryCache<string, any> {
          */
         ngZone.onUnstable.subscribe(() => {
             if (this.isLoggingEnabled()) {
-                NgZoneCache.zoneLogger.debug(`[$NgZoneCache][onUnstable.subscribe] Initialize the cache context zone`);
+                NgZoneGlobalCache.zoneLogger.debug(`[$NgZoneCache][onUnstable.subscribe] Initialize the cache context zone`);
             }
             this.clear();
         });
@@ -62,12 +62,12 @@ export class NgZoneCache extends MemoryCache<string, any> {
          */
         ngZone.onStable.subscribe(() => {
             if (this.isLoggingEnabled()) {
-                NgZoneCache.zoneLogger.debug(`[$NgZoneCache][onStable.subscribe] Destruction the cache context zone. The cache with size ${this.size()} will be cleared`);
+                NgZoneGlobalCache.zoneLogger.debug(`[$NgZoneCache][onStable.subscribe] Destruction the cache context zone. The cache with size ${this.size()} will be cleared`);
             }
             this.clear();
         });
 
-        NgZoneCache.INSTANCE = this;
+        NgZoneGlobalCache.INSTANCE = this;
     }
 
     public static INSTANCE:ICache<any, any>;
