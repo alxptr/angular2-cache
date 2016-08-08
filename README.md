@@ -6,8 +6,10 @@ An implementation of cache at Angular2.
 
 The cache service supports the following types of caching:  
 
-1. **ZONE** based on the NgZone (the analogue of [Java ThreadLocal](https://docs.oracle.com/javase/8/docs/api/java/lang/ThreadLocal.html))  
-2. **MEMORY** based on the JavaScript heap (reset after F5)  
+1. **ZONE** based on the NgZone and the MemoryGlobalCache (the analogue of [Java ThreadLocal](https://docs.oracle.com/javase/8/docs/api/java/lang/ThreadLocal.html)).  
+    The NgZoneGlobalCache service and @ZoneCached decorator are accessible for use.  
+2. **MEMORY** based on [the JavaScript Map](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Map) (reset after F5).  
+    The MemoryGlobalCache service and @MemoryCached decorator are accessible for use.  
 3. STORAGE based on the Window.sessionStorage (in progress)  
 4. SESSION based on the Window.sessionStorage (in progress)  
 5. FILE based on the chrome.fileSystem (in progress)  
@@ -19,9 +21,22 @@ First you need to install the npm module:
 npm install angular2-cache --save
 ```
 
+## The accessible decorators an
+
+export function ZoneCached(...args:any[]) {
+    return cache(CacheTypeEnum.ZONE);
+}
+
+export function MemoryCached(...args:any[]) {
+    return cache(CacheTypeEnum.MEMORY);
+}
+
 ## Use
 
 **main.ts**
+
+We should integrate the cache providers at first.
+
 ```typescript
 import {CACHE_PROVIDERS} from 'angular2-cache';
 
@@ -34,6 +49,10 @@ export function main() {
 ```
 
 **app.ts**
+
+Then we should connect the appropriate the cache service (NgZoneGlobalCache, MemoryGlobalCache, etc..).  The each cache 
+service has the public methods for setting configuration (setEnableLogging, setEnable or setCachedValue for setting the not lazy presets values).
+
 ```typescript
 import {NgZoneGlobalCache, MemoryGlobalCache} from 'angular2-cache';
 
@@ -46,6 +65,9 @@ export class App {
    {
        ngZoneCache.setEnableLogging(false);                                         // By default, the smart logger is enabled
        memoryCache.setEnable(false);                                                // By default, the cache is enabled
+       
+       // We can also warm up the cache at first
+       // memoryCache.setCachedValue(new Date('11/11/2020'), 100500);
        ...
    }
 ```
