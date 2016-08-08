@@ -14,6 +14,8 @@ The cache service supports the following types of caching:
 4. SESSION based on the Window.sessionStorage (in progress)  
 5. FILE based on the chrome.fileSystem (in progress)  
 
+Also, the **zoneCachedDate**, **memoryCachedDate** cached [date pipes](https://angular.io/docs/ts/latest/api/common/index/DatePipe-class.html) are accessible now for use.  
+
 ## Installation
 
 First you need to install the npm module:
@@ -130,6 +132,12 @@ export class Product {
         return this.getId();
     }
 }
+```
+
+**app.html**
+```html
+<span [innerHTML]='"Expires: <strong>{expirationDate}</strong>" | translate: { expirationDate: expirationDate | zoneCachedDate: "yyyy-MM-dd") }'>
+</span>
 ```
 
 ## Publish
