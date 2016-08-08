@@ -18,7 +18,7 @@ export class Cache<TKey, TValue> implements ICache<TKey, TValue> {
         this._cache.setCachedValue(key, value);
 
         if (this.loggingEnable && Cache.logger.isDebugEnabled()) {
-            Cache.logger.debug('[Cache][setCachedValue] Set value to the cache. Key:', key, ', value: ', value);
+            Cache.logger.debug('[Cache][setCachedValue] Set value to the cache. Key:', key, ', value: ', value, ', cache: ', this._cache.constructor.name);
         }
     }
 
@@ -29,7 +29,7 @@ export class Cache<TKey, TValue> implements ICache<TKey, TValue> {
         const value:TValue = this._cache.getCachedValue(key);
 
         if (this.loggingEnable && Cache.logger.isDebugEnabled()) {
-            Cache.logger.debug('[Cache][getCachedValue] Get value from the cache. Key:', key, ', value: ', value);
+            Cache.logger.debug('[Cache][getCachedValue] Get value from the cache. Key:', key, ', value: ', value, ', cache: ', this._cache.constructor.name);
         }
         return value;
     }
@@ -39,7 +39,7 @@ export class Cache<TKey, TValue> implements ICache<TKey, TValue> {
      */
     public clear() {
         if (this.loggingEnable && Cache.logger.isDebugEnabled()) {
-            Cache.logger.debug(`[Cache][clear] Clear the cache. The cache has size ${this.size()}`);
+            Cache.logger.debug(`[Cache][clear] Clear the cache. The cache has size ${this.size()}, cache: ${this._cache.constructor.name}`);
         }
         this._cache.clear();
     }

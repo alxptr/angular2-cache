@@ -7,4 +7,6 @@ export interface ICache<TKey, TValue> {
     clear();
     
     size():number;
+
+    setEnableLogging(enabled:boolean);
 }
