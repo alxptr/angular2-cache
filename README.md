@@ -8,8 +8,10 @@ The cache service supports the following types of caching:
 
 1. **ZONE** based on [NgZone](https://angular.io/docs/ts/latest/api/core/index/NgZone-class.html) (the analogue of [Java ThreadLocal](https://docs.oracle.com/javase/8/docs/api/java/lang/ThreadLocal.html)) and the MemoryGlobalCache.  
     The NgZoneGlobalCache service and [@ZoneCached](https://www.typescriptlang.org/docs/handbook/decorators.html) decorator are accessible for use.  
-2. **MEMORY** based on [JavaScript Map](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Map) (reset after F5).  
+    The zone cache is cleared after the "Zone" area will have finished its work.  
+2. **MEMORY** based on [JavaScript Map](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Map).  
     The MemoryGlobalCache service and [@MemoryCached](https://www.typescriptlang.org/docs/handbook/decorators.html) decorator are accessible for use.  
+    The memory cache is cleared after F5.  
 3. STORAGE based on the Window.sessionStorage (in progress)  
 4. SESSION based on the Window.sessionStorage (in progress)  
 5. FILE based on the chrome.fileSystem (in progress)  
