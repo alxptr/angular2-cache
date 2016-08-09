@@ -4,7 +4,7 @@ import {
     isBlank
 } from '@angular/common/src/facade/lang';
 
-import {generateUUID} from '../Utils';
+import {generateUUID, toCacheKeyByArray} from '../Utils';
 
 import {CacheTypeEnum} from '../CacheTypeEnum';
 import {ICache} from '../ICache';
@@ -25,8 +25,6 @@ function cache(cacheType:CacheTypeEnum) {
                 return originalMethod.apply(this, args);
             }
 
-            let result:any;
-
             let compositeKeyArray:Array<string> = [
                 uniqueCacheKey,
                 this /** If there are no input arguments of the function, then we should override toString() with the specific object key **/
@@ -35,9 +33,9 @@ function cache(cacheType:CacheTypeEnum) {
                 compositeKeyArray = arrayConcatFn.apply(compositeKeyArray, args);
             }
 
-            const compositeKey:string = compositeKeyArray.join('.');
+            const compositeKey:string = toCacheKeyByArray(compositeKeyArray);
 
-            result = cache.getCachedValue(compositeKey);
+            let result = cache.getCachedValue(compositeKey);
             if (typeof result !== "undefined") {
                 return result;
             }

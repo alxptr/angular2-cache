@@ -7,3 +7,11 @@ export function generateUUID() {
         return (c == 'x' ? result : (result & 0x3 | 0x8)).toString(16);
     });
 }
+
+export function toCacheKey() {
+    return Array.from(arguments).join('.');
+}
+
+export function toCacheKeyByArray(args:Array<any>) {
+    return toCacheKey.apply(null, args);
+}
