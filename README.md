@@ -91,7 +91,8 @@ export class Service {
     public toString():string {
         // It's very important to override the toString() if cached method has no input arguments because the engine
         // uses the global cache key for identifying the result of "getExpirationDate()" for the each service instance
-        return this.getId();
+        
+        return toCacheKey(this.constructor.name, this.getId());     // The composite key: entity type + entity Id
     }
 }
 ```
@@ -129,7 +130,8 @@ export class Product {
     public toString():string {
         // It's very important to override the toString() because the engine uses the global cache key for 
         // identifying the product instance
-        return this.getId();
+        
+        return toCacheKey(this.constructor.name, this.getId());     // The composite key: entity type + entity Id
     }
 }
 ```
