@@ -1,3 +1,7 @@
+import {
+    isBlank
+} from '@angular/common/src/facade/lang';
+
 export function generateUUID() {
     let currentDate:number = Date.now();
 
@@ -8,10 +12,37 @@ export function generateUUID() {
     });
 }
 
-export function toCacheKey() {
-    return Array.from(arguments).join('.');
-}
+export class CacheKeyBuilder {
 
-export function toCacheKeyByArray(args:Array<any>) {
-    return toCacheKey.apply(null, args);
+    private parts:Array<any>;
+
+    constructor(parts?:Array<any>) {
+        this.parts = parts || [];
+    }
+
+    public static make(...args:Array<any>):CacheKeyBuilder {
+        return new CacheKeyBuilder(
+            Array.from(arguments)
+        );
+    }
+
+    public append(...parts:any[]):CacheKeyBuilder {
+        if (!isBlank(parts)) {
+            parts.forEach((part:any) => {
+                let preparedPart = part;
+
+                if (part instanceof Date) {
+                    preparedPart = (part as Date).getTime();
+                } else if (!isBlank(part) && part.constructor) {
+                    preparedPart = part.constructor.name;
+                }
+                this.parts.push(preparedPart);
+            });
+        }
+        return this;
+    }
+
+    public build():string {
+        return this.parts.join('.');
+    }
 }

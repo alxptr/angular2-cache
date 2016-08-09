@@ -66,6 +66,8 @@ export class App {
 
 **Service.ts**
 ```typescript
+import {CacheKeyBuilder} from 'angular2-cache';
+
 export class Service {
 
     private id:string;              // Identifier of the service ("cloud-1", "cloud-2", ...)
@@ -92,13 +94,18 @@ export class Service {
         // It's very important to override the toString() if cached method has no input arguments because the engine
         // uses the global cache key for identifying the result of "getExpirationDate()" for the each service instance
         
-        return toCacheKey(this.constructor.name, this.getId());     // The composite key: entity type + entity Id
+        return CacheKeyBuilder.make()
+            .append(this)
+            .append(this.getId())
+            .build();                   // The composite key: entity type + entity Id
     }
 }
 ```
 
 **Service2.ts**
 ```typescript
+import {CacheKeyBuilder} from 'angular2-cache';
+
 export class Service {
 
     private id:string;              // Identifier of the service ("cloud-1", "cloud-2", ...)
@@ -131,7 +138,10 @@ export class Product {
         // It's very important to override the toString() because the engine uses the global cache key for 
         // identifying the product instance
         
-        return toCacheKey(this.constructor.name, this.getId());     // The composite key: entity type + entity Id
+        return CacheKeyBuilder.make()
+            .append(this)
+            .append(this.getId())
+            .build();                   // The composite key: entity type + entity Id
     }
 }
 ```
