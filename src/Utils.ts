@@ -16,6 +16,8 @@ export class CacheKeyBuilder {
 
     private parts:Array<any>;
 
+    private static DEFAULT_CONSTRUCTORS:string[] = ["Number", "Boolean", "String", "RegExp", "Symbol"];
+
     constructor(parts?:Array<any>) {
         this.parts = parts || [];
     }
@@ -27,18 +29,20 @@ export class CacheKeyBuilder {
     }
 
     public append(...parts:any[]):CacheKeyBuilder {
-        if (!isBlank(parts)) {
-            parts.forEach((part:any) => {
-                let preparedPart = part;
-
-                if (part instanceof Date) {
-                    preparedPart = (part as Date).getTime();
-                } else if (!isBlank(part) && part.constructor) {
-                    preparedPart = part.constructor.name;
-                }
-                this.parts.push(preparedPart);
-            });
-        }
+        parts.forEach((part:any) => {
+            if (Array.isArray(part)) {
+                (part as Array<any>).forEach((partItem:any) => {
+                    this.append(partItem);
+                });
+            } else if (part instanceof Date) {
+                this.parts.push((part as Date).getTime());
+            } else if (!isBlank(part)
+                && CacheKeyBuilder.DEFAULT_CONSTRUCTORS.indexOf(part.constructor.name) === -1) {
+                this.parts.push(part.constructor.name);
+            } else {
+                this.parts.push(part);
+            }
+        });
         return this;
     }
 
