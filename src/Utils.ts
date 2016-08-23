@@ -19,13 +19,6 @@ export class CacheKeyBuilder {
 
     static ORIFINAL_STR_FN = Object.prototype.toString;
 
-    private static DEFAULT_CONSTRUCTORS:Set<string> = new Set<string>([
-        "Number",
-        "Boolean",
-        "String",
-        "RegExp",
-        "Symbol"
-    ]);
 
     private parts:Array<any> = [];
 
@@ -35,6 +28,14 @@ export class CacheKeyBuilder {
 
     public static make(...args:Array<any>):CacheKeyBuilder {
         return new CacheKeyBuilder(args);
+    }
+
+    /**
+     * We must prevent recursion using this method if an object has an overridden method
+     */
+    public appendObjectName(userObject:any):CacheKeyBuilder {
+        this.parts.push(userObject.constructor.name);
+        return this;
     }
 
     public append(...parts:any[]):CacheKeyBuilder {
@@ -53,11 +54,7 @@ export class CacheKeyBuilder {
                          */
                         this.parts.push(part);
                     } else {
-                        if (CacheKeyBuilder.DEFAULT_CONSTRUCTORS.has(part.constructor.name)) {
-                            this.parts.push(part);
-                        } else {
-                            this.parts.push(part.constructor.name);
-                        }
+                        this.appendObjectName(part);
                     }
                 }
             }

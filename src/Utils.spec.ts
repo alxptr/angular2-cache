@@ -61,6 +61,29 @@ describe('Utils', ()=> {
 
             it('User class as parameter. Test2', ()=> {
                 class Test {
+                    toString():string {
+                        return CacheKeyBuilder.make()
+                            .appendObjectName(this)
+                            .append(2)
+                            .build();
+                    }
+                }
+                expect(CacheKeyBuilder.make(1).append(new Test()).append(3).build()).toEqual('1.Test.2.3');
+            });
+
+            it('User class as parameter. Test3', ()=> {
+                class Test {
+                    toString():string {
+                        return CacheKeyBuilder.make()
+                            .appendObjectName(this)
+                            .build();
+                    }
+                }
+                expect(CacheKeyBuilder.make(new Test()).append([new Test(), new Test()]).append(100500).build()).toEqual('Test.Test.Test.100500');
+            });
+
+            it('User class as parameter. Test4', ()=> {
+                class Test {
                 }
                 expect(CacheKeyBuilder.make(1).append(new Test()).append(3).build()).toEqual('1.Test.3');
             });
