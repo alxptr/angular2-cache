@@ -2,7 +2,7 @@
 .git
 .npmignore
 
-demo
+config
 typings
 node_modules
 
@@ -11,3 +11,4 @@ node_modules
 
 src/*.js
 src/*.js.map
+karma.conf.js
