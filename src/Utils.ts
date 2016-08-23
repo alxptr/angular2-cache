@@ -1,5 +1,8 @@
 import {
-    isBlank
+    isBlank,
+    isArray,
+    isDate,
+    isPresent
 } from '@angular/common/src/facade/lang';
 
 export function generateUUID() {
@@ -14,33 +17,49 @@ export function generateUUID() {
 
 export class CacheKeyBuilder {
 
-    private parts:Array<any>;
+    static ORIFINAL_STR_FN = Object.prototype.toString;
 
-    private static DEFAULT_CONSTRUCTORS:string[] = ["Number", "Boolean", "String", "RegExp", "Symbol"];
+    private static DEFAULT_CONSTRUCTORS:Set<string> = new Set<string>([
+        "Number",
+        "Boolean",
+        "String",
+        "RegExp",
+        "Symbol"
+    ]);
+
+    private parts:Array<any> = [];
 
     constructor(parts?:Array<any>) {
-        this.parts = parts || [];
+        this.append(parts);
     }
 
     public static make(...args:Array<any>):CacheKeyBuilder {
-        return new CacheKeyBuilder(
-            Array.from(arguments)
-        );
+        return new CacheKeyBuilder(args);
     }
 
     public append(...parts:any[]):CacheKeyBuilder {
         parts.forEach((part:any) => {
-            if (Array.isArray(part)) {
-                (part as Array<any>).forEach((partItem:any) => {
-                    this.append(partItem);
-                });
-            } else if (part instanceof Date) {
-                this.parts.push((part as Date).getTime());
-            } else if (!isBlank(part)
-                && CacheKeyBuilder.DEFAULT_CONSTRUCTORS.indexOf(part.constructor.name) === -1) {
-                this.parts.push(part.constructor.name);
+            if (isBlank(part)) {
+                this.parts.push(part === null ? "null" : "undefined");
             } else {
-                this.parts.push(part);
+                if (isArray(part)) {
+                    (part as Array<any>).forEach((partItem:any) => this.append(partItem));
+                } else if (isDate(part)) {
+                    this.parts.push((part as Date).getTime());
+                } else {
+                    if (part.toString && part.toString !== CacheKeyBuilder.ORIFINAL_STR_FN) {
+                        /**
+                         * If we override the original method, we must use toString() value for identifying the object
+                         */
+                        this.parts.push(part);
+                    } else {
+                        if (CacheKeyBuilder.DEFAULT_CONSTRUCTORS.has(part.constructor.name)) {
+                            this.parts.push(part);
+                        } else {
+                            this.parts.push(part.constructor.name);
+                        }
+                    }
+                }
             }
         });
         return this;
