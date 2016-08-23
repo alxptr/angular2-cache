@@ -97,7 +97,7 @@ export class Service {
         // uses the global cache key for identifying the result of "getExpirationDate()" for the each service instance
         
         return CacheKeyBuilder.make()
-            .append(this)
+            .appendObjectName(this)     // Don't pass the "this" parameter to "append" method into "toString" code section!
             .append(this.getId())
             .build();                   // The composite key: entity type + entity Id
     }
@@ -141,7 +141,7 @@ export class Product {
         // identifying the product instance
         
         return CacheKeyBuilder.make()
-            .append(this)
+            .appendObjectName(this)     // Don't pass the "this" parameter to "append" method into "toString" code section!
             .append(this.getId())
             .build();                   // The composite key: entity type + entity Id
     }
