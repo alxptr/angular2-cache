@@ -75,7 +75,7 @@ export function getLocale(): string {
         currentLang;
 
     if (navigatorLanguages && navigatorLanguages.length) {
-        currentLang = this.getSupportedTargetLanguage(navigatorLanguages[0]);
+        currentLang = navigatorLanguages[0];
     } else {
         currentLang = navigator['userLanguage']
             || navigator.language
