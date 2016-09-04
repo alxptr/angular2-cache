@@ -16,7 +16,7 @@ The cache service supports the following types of caching:
 4. SESSION based on the Window.sessionStorage (in progress)  
 5. FILE based on the chrome.fileSystem (in progress)  
 
-Also, the **zoneCachedDate**, **memoryCachedDate** cached [date pipes](https://angular.io/docs/ts/latest/api/common/index/DatePipe-class.html) are accessible now for use.  
+Also, the **zoneCachedDate**, **memoryCachedDate** cached [date pipes](https://angular.io/docs/ts/latest/api/common/index/DatePipe-class.html) are accessible now for use.
 
 ## Installation
 
@@ -26,6 +26,13 @@ npm install angular2-cache --save
 ```
 
 ## Use
+
+You can use the global $$CACHE_LOCALE flag for setting custom locale that is different from the browser language (it is actual for date pipes).
+
+```javascript
+window.$$CACHE_LOCALE = 'en-US';
+// or window.$$CACHE_LOCALE = 'ru';
+```
 
 **main.ts**
 
