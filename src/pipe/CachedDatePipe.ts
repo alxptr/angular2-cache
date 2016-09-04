@@ -1,6 +1,6 @@
 import {
-    Pipe,
-    PipeTransform
+	Pipe,
+	PipeTransform
 } from '@angular/core';
 
 import {DatePipe} from '@angular/common';
@@ -8,32 +8,37 @@ import {DatePipe} from '@angular/common';
 import {ZoneCached, MemoryCached} from '../decorator/cache';
 import {getLocale} from "../Utils";
 
-const DATE_PIPE:DatePipe = new DatePipe(getLocale());
+abstract class CachedDatePipe implements PipeTransform {
 
-@Pipe({
-    name: 'zoneCachedDate'
-})
-export class ZoneCachedDatePipe implements PipeTransform {
+	protected datePipe: DatePipe = new DatePipe(getLocale());
 
-    /**
-     * @override
-     */
-    @ZoneCached()
-    public transform(date:any, pattern?:string):string {
-        return DATE_PIPE.transform(date, pattern);
-    }
+	abstract transform(date: any, pattern?: string): string;
 }
 
 @Pipe({
-    name: 'memoryCachedDate'
+	name: 'zoneCachedDate'
 })
-export class MemoryCachedDatePipe implements PipeTransform {
+export class ZoneCachedDatePipe extends CachedDatePipe {
 
-    /**
-     * @override
-     */
-    @MemoryCached()
-    public transform(date:any, pattern?:string):string {
-        return DATE_PIPE.transform(date, pattern);
-    }
+	/**
+	 * @override
+	 */
+	@ZoneCached()
+	public transform(date: any, pattern?: string): string {
+		return this.datePipe.transform(date, pattern);
+	}
+}
+
+@Pipe({
+	name: 'memoryCachedDate'
+})
+export class MemoryCachedDatePipe extends CachedDatePipe {
+
+	/**
+	 * @override
+	 */
+	@MemoryCached()
+	public transform(date: any, pattern?: string): string {
+		return this.datePipe.transform(date, pattern);
+	}
 }
