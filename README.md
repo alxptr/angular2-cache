@@ -32,13 +32,17 @@ npm install angular2-cache --save
 We should integrate the cache providers at first.
 
 ```typescript
-import {CACHE_PROVIDERS} from 'angular2-cache';
+import {CacheModule} from 'angular2-cache';
 
-export function main() {
-    return bootstrap(App, [
-        CACHE_PROVIDERS,
+@NgModule({
+    bootstrap: [ApplicationComponent],
+    imports: [
+        CacheModule,
         ...
-    ]);
+    ],
+    ...
+})
+export class ApplicationModule {
 }
 ```
 
