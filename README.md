@@ -1,6 +1,6 @@
 # angular2-cache
 
-An implementation of cache at Angular2.
+An implementation of cache at Angular2 (RC6 compatible).
 
 ## Description
 

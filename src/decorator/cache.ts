@@ -1,5 +1,3 @@
-import {Type} from '@angular/core';
-
 import {
     isBlank
 } from '@angular/common/src/facade/lang';
@@ -16,7 +14,7 @@ function cache(cacheType:CacheTypeEnum) {
     const cacheProvider:ICacheProvider = getProviderByType(cacheType);
 
     return function (target:Object, propertyKey:string, descriptor:TypedPropertyDescriptor<any>) {
-        const originalMethod:Type = descriptor.value;
+        const originalMethod:Function = descriptor.value;
 
         descriptor.value = function (...args:any[]) {
             const cache:ICache<string, any> = cacheProvider.provideCache();
