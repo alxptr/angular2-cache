@@ -72,7 +72,7 @@ export class App {
 
 **Service.ts**
 ```typescript
-import {CacheKeyBuilder} from 'angular2-cache';
+import {CacheKeyBuilder, ZoneCached} from 'angular2-cache';
 
 export class Service {
 
@@ -110,7 +110,7 @@ export class Service {
 
 **Service2.ts**
 ```typescript
-import {CacheKeyBuilder} from 'angular2-cache';
+import {CacheKeyBuilder, ZoneCached} from 'angular2-cache';
 
 export class Service {
 
