@@ -8,7 +8,7 @@ import {DatePipe} from '@angular/common';
 import {ZoneCached, MemoryCached} from '../decorator/cache';
 import {getLocale} from "../Utils";
 
-abstract class CachedDatePipe implements PipeTransform {
+export abstract class CachedDatePipe implements PipeTransform {
 
 	protected datePipe: DatePipe = new DatePipe(getLocale());
 
