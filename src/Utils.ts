@@ -1,8 +1,7 @@
 import {
     isBlank,
     isArray,
-    isDate,
-    isPresent
+    isDate
 } from '@angular/common/src/facade/lang';
 
 export function generateUUID() {
@@ -65,4 +64,24 @@ export class CacheKeyBuilder {
     public build():string {
         return this.parts.join('.');
     }
+}
+
+export function getLocale(): string {
+    if (typeof window !== 'undefined' && !isBlank(window['$$CACHE_LOCALE'])) {
+        return window['$$CACHE_LOCALE'];
+    }
+
+    let navigator = this.nav,
+        navigatorLanguages: Array<string> = navigator.languages,
+        currentLang;
+
+    if (navigatorLanguages && navigatorLanguages.length) {
+        currentLang = this.getSupportedTargetLanguage(navigatorLanguages[0]);
+    } else {
+        currentLang = navigator.userLanguage
+            || navigator.language
+            || navigator.browserLanguage
+            || navigator.systemLanguage;
+    }
+    return currentLang;
 }

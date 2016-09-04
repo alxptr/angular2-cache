@@ -6,8 +6,9 @@ import {
 import {DatePipe} from '@angular/common';
 
 import {ZoneCached, MemoryCached} from '../decorator/cache';
+import {getLocale} from "../Utils";
 
-const DATE_PIPE:DatePipe = new DatePipe(null);
+const DATE_PIPE:DatePipe = new DatePipe(getLocale());
 
 @Pipe({
     name: 'zoneCachedDate'
