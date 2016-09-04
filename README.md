@@ -27,13 +27,6 @@ npm install angular2-cache --save
 
 ## Use
 
-You can also use the global $$CACHE_LOCALE flag for setting custom locale that is different from the browser language (it is actual for date pipes).
-
-```javascript
-window.$$CACHE_LOCALE = 'en-US';
-// or window.$$CACHE_LOCALE = 'ru';
-```
-
 **main.ts**
 
 We should integrate the cache providers at first.
@@ -50,6 +43,11 @@ import {CacheModule} from 'angular2-cache';
     ...
 })
 export class ApplicationModule {
+
+	constructor(public appRef: ApplicationRef, public appState: AppState) {
+		// You can also use the global $$CACHE_LOCALE flag for setting custom locale that is different from the browser language (it is actual for date pipes).
+		// window.$$CACHE_LOCALE = 'ru';    // 'en-US'
+	}
 }
 ```
 
