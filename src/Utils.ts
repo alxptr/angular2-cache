@@ -71,17 +71,16 @@ export function getLocale(): string {
         return window['$$CACHE_LOCALE'];
     }
 
-    let navigator = this.nav,
-        navigatorLanguages: Array<string> = navigator.languages,
+    let navigatorLanguages: Array<string> = navigator['languages'],
         currentLang;
 
     if (navigatorLanguages && navigatorLanguages.length) {
         currentLang = this.getSupportedTargetLanguage(navigatorLanguages[0]);
     } else {
-        currentLang = navigator.userLanguage
+        currentLang = navigator['userLanguage']
             || navigator.language
-            || navigator.browserLanguage
-            || navigator.systemLanguage;
+            || navigator['browserLanguage']
+            || navigator['systemLanguage'];
     }
     return currentLang;
 }
