@@ -48,7 +48,7 @@ export class ApplicationModule {
 
 **app.ts**
 
-Then we should connect the appropriate the cache service (NgZoneGlobalCache, MemoryGlobalCache, etc..).  The each cache 
+Then you should inject the appropriate the cache service (NgZoneGlobalCache, MemoryGlobalCache, etc..).  The each cache
 service has the public methods for setting configuration (setEnableLogging, setEnable or setCachedValue for setting the not lazy presets values).
 
 ```typescript
