@@ -27,7 +27,7 @@ npm install angular2-cache --save
 
 ## Use
 
-You can use the global $$CACHE_LOCALE flag for setting custom locale that is different from the browser language (it is actual for date pipes).
+You can also use the global $$CACHE_LOCALE flag for setting custom locale that is different from the browser language (it is actual for date pipes).
 
 ```javascript
 window.$$CACHE_LOCALE = 'en-US';
