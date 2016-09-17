@@ -1,8 +1,4 @@
-import {
-    isBlank
-} from '@angular/common/src/facade/lang';
-
-import {generateUUID, CacheKeyBuilder} from '../Utils';
+import {generateUUID, CacheKeyBuilder, isBlank} from '../Utils';
 
 import {CacheTypeEnum} from '../CacheTypeEnum';
 import {ICache} from '../ICache';

@@ -1,23 +1,6 @@
-import {
-    isBlank,
-    isArray,
-    isDate
-} from '@angular/common/src/facade/lang';
-
-export function generateUUID() {
-    let currentDate:number = Date.now();
-
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-        const result:number = (currentDate + Math.random() * 16) % 16 | 0;
-        currentDate = Math.floor(currentDate / 16);
-        return (c == 'x' ? result : (result & 0x3 | 0x8)).toString(16);
-    });
-}
-
 export class CacheKeyBuilder {
 
-    static ORIFINAL_STR_FN = Object.prototype.toString;
-
+    static ORIGINAL_STR_FN = Object.prototype.toString;
 
     private parts:Array<any> = [];
 
@@ -42,14 +25,14 @@ export class CacheKeyBuilder {
             if (isBlank(part)) {
                 this.parts.push(part === null ? "null" : "undefined");
             } else {
-                if (isArray(part)) {
+                if (Array.isArray(part)) {
                     (part as Array<any>).forEach((partItem:any) => this.append(partItem));
                 } else if (isDate(part)) {
                     this.parts.push((part as Date).getTime());
                 } else {
-                    if (part.toString && part.toString !== CacheKeyBuilder.ORIFINAL_STR_FN) {
+                    if (part.toString && part.toString !== CacheKeyBuilder.ORIGINAL_STR_FN) {
                         /**
-                         * If we override the original method, we must use toString() value for identifying the object
+                         * If we have overridden the original method, we must use toString() value for identifying the object
                          */
                         this.parts.push(part);
                     } else {
@@ -66,21 +49,20 @@ export class CacheKeyBuilder {
     }
 }
 
-export function getLocale(): string {
-    if (typeof window !== 'undefined' && !isBlank(window['$$CACHE_LOCALE'])) {
-        return window['$$CACHE_LOCALE'];
-    }
+export function isDate(obj) {
+    return obj instanceof Date && !isNaN(obj.valueOf());
+}
 
-    let navigatorLanguages: Array<string> = navigator['languages'],
-        currentLang;
+export function isBlank(obj) {
+    return obj === undefined || obj === null;
+}
 
-    if (navigatorLanguages && navigatorLanguages.length) {
-        currentLang = navigatorLanguages[0];
-    } else {
-        currentLang = navigator['userLanguage']
-            || navigator.language
-            || navigator['browserLanguage']
-            || navigator['systemLanguage'];
-    }
-    return currentLang;
+export function generateUUID() {
+    let currentDate:number = Date.now();
+
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+        const result:number = (currentDate + Math.random() * 16) % 16 | 0;
+        currentDate = Math.floor(currentDate / 16);
+        return (c == 'x' ? result : (result & 0x3 | 0x8)).toString(16);
+    });
 }
