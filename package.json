@@ -1,6 +1,6 @@
 {
   "name": "angular2-cache",
-  "version": "0.0.40",
+  "version": "0.0.41",
   "license": "MIT",
   "scripts": {
     "clean": "npm cache clean",
