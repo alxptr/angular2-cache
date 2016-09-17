@@ -2,8 +2,8 @@ import {
     Injectable
 } from '@angular/core';
 
-import {ICache} from '../ICache';
 import {MemoryCache} from './MemoryCache';
+import {GlobalCachesInstances} from '../GlobalCachesInstances';
 
 @Injectable()
 export class MemoryGlobalCache extends MemoryCache<any, any> {
@@ -11,8 +11,6 @@ export class MemoryGlobalCache extends MemoryCache<any, any> {
     constructor() {
         super();
 
-        MemoryGlobalCache.INSTANCE = this;
+        GlobalCachesInstances.MEMORY_INSTANCE = this;
     }
-
-    public static INSTANCE:ICache<any, any>;
 }

@@ -1,8 +1,6 @@
-
 import {ICache} from '../ICache';
 import {CacheTypeEnum} from '../CacheTypeEnum';
-import {MemoryGlobalCache} from '../memory/MemoryGlobalCache';
-import {NgZoneGlobalCache} from '../zone/NgZoneGlobalCache';
+import {GlobalCachesInstances} from '../GlobalCachesInstances';
 
 export interface ICacheProvider {
     provideCache():ICache<any, any>;
@@ -17,7 +15,7 @@ class ZoneCacheProvider implements ICacheProvider {
      * @override
      */
     public provideCache():ICache<any, any> {
-        return NgZoneGlobalCache.INSTANCE;
+        return GlobalCachesInstances.ZONE_INSTANCE;
     }
 
     public static INSTANCE:ICacheProvider = new ZoneCacheProvider();
@@ -32,7 +30,7 @@ class MemoryCacheProvider implements ICacheProvider {
      * @override
      */
     public provideCache():ICache<any, any> {
-        return MemoryGlobalCache.INSTANCE;
+        return GlobalCachesInstances.MEMORY_INSTANCE;
     }
 
     public static INSTANCE:ICacheProvider = new MemoryCacheProvider();

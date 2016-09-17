@@ -91,7 +91,7 @@ describe('Utils', ()=> {
 
         describe('Primitive wrapper as parameter', ()=> {
             it('Primitive wrapper as parameter. Test1', ()=> {
-                expect(CacheKeyBuilder.make(new Number(1)).append(new String("2")).append(new Boolean(false)).build()).toEqual('1.2.false');
+                expect(CacheKeyBuilder.make(1).append("2").append(false).build()).toEqual('1.2.false');
             });
         });
 

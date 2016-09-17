@@ -6,8 +6,8 @@ import {
 
 import {LoggerFactory, ILogger} from 'ts-smart-logger';
 
-import {ICache} from '../ICache';
 import {MemoryCache} from '../memory/MemoryCache';
+import {GlobalCachesInstances} from '../GlobalCachesInstances';
 
 @Injectable()
 export class NgZoneGlobalCache extends MemoryCache<any, any> {
@@ -67,8 +67,6 @@ export class NgZoneGlobalCache extends MemoryCache<any, any> {
             this.clear();
         });
 
-        NgZoneGlobalCache.INSTANCE = this;
+        GlobalCachesInstances.ZONE_INSTANCE = this;
     }
-
-    public static INSTANCE:ICache<any, any>;
 }
