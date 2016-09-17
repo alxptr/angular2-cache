@@ -1,4 +1,4 @@
-import {LoggerFactory, ILogger} from 'angular2-smart-logger';
+import {LoggerFactory, ILogger} from 'ts-smart-logger';
 
 import {ICache} from './ICache';
 
