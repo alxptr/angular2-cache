@@ -8,7 +8,15 @@
     "sourceMap": true,
     "declaration": true,
     "rootDir": "src",
-    "outDir": ""
+    "outDir": "",
+    "lib": [
+      "es6",
+      "dom"
+    ],
+    "types": [
+      "node",
+      "jasmine"
+    ]
   },
   "compileOnSave": false,
   "buildOnSave": false,
