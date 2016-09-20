@@ -15,7 +15,7 @@
 
     "ts-smart-logger": "~0.0.3",
 
-    "core-js": "^2.4.0",
+    "core-js": "~2.4.0",
     "rxjs": "~5.0.0-beta.12",
     "zone.js": "~0.6.13"
   },
@@ -27,7 +27,7 @@
 
     "ts-smart-logger": "~0.0.3",
 
-    "core-js": "^2.4.0",
+    "core-js": "~2.4.0",
     "rxjs": "~5.0.0-beta.12",
     "zone.js": "~0.6.13",
     "jasmine-core": "2.4.1",

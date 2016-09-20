@@ -33,7 +33,7 @@ npm install angular2-cache --save
 We should integrate the cache providers at first.
 
 ```typescript
-import {CacheModule} from 'angular2-cache';
+import {CacheModule} from 'angular2-cache/index';
 
 @NgModule({
     bootstrap: [ApplicationComponent],
@@ -56,7 +56,7 @@ Then you should inject the appropriate the cache service (NgZoneGlobalCache, Mem
 service has the public methods for setting configuration (setEnableLogging, setEnable or setCachedValue for setting the not lazy presets values).
 
 ```typescript
-import {NgZoneGlobalCache, MemoryGlobalCache} from 'angular2-cache';
+import {NgZoneGlobalCache, MemoryGlobalCache} from 'angular2-cache/index';
 
 @Component({...})
 export class App {
@@ -76,7 +76,7 @@ export class App {
 
 **Service.ts**
 ```typescript
-import {CacheKeyBuilder, ZoneCached} from 'angular2-cache';
+import {CacheKeyBuilder, ZoneCached} from 'angular2-cache/index';
 
 export class Service {
 
@@ -114,7 +114,7 @@ export class Service {
 
 **Service2.ts**
 ```typescript
-import {CacheKeyBuilder, ZoneCached} from 'angular2-cache';
+import {CacheKeyBuilder, ZoneCached} from 'angular2-cache/index';
 
 export class Service {
 
