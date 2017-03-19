@@ -1,6 +1,6 @@
 # angular2-cache
 
-An implementation of cache at Angular2 (2.0.0 compatible).
+An implementation of cache at Angular2 (2.4.10 compatible).
 
 ## Description
 
@@ -15,7 +15,7 @@ The cache service supports the following types of caching:
 3. STORAGE based on the Window.sessionStorage (in progress)  
 4. SESSION based on the Window.sessionStorage (in progress)  
 5. FILE based on the chrome.fileSystem (in progress)  
-6. INSTANCE based on the chrome.fileSystem (in progress)  
+6. INSTANCE based (in progress)
 
 Also, the **zoneCachedDate**, **memoryCachedDate** cached [date pipes](https://angular.io/docs/ts/latest/api/common/index/DatePipe-class.html) are accessible now for use.
 
